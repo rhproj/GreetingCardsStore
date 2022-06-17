@@ -11,9 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GCard.MVCApplication", "GCa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GCard.RazorPagesApplication", "GCard.RazorPagesApplication", "{2F851852-8D02-4E62-871F-376D3A88D9E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCard.Model", "GCard.Model\GCard.Model.csproj", "{447475B4-5C04-492C-B477-ECD922A7CE49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.Model", "GCard.Model\GCard.Model.csproj", "{447475B4-5C04-492C-B477-ECD922A7CE49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCard.DataAccess", "GCard.DataAccess\GCard.DataAccess.csproj", "{109F3663-5A7F-491E-B321-210DB75EC2E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.DataAccess", "GCard.DataAccess\GCard.DataAccess.csproj", "{109F3663-5A7F-491E-B321-210DB75EC2E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.RazorPagesApp", "GCard.RazorPagesApp\GCard.RazorPagesApp.csproj", "{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{109F3663-5A7F-491E-B321-210DB75EC2E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{109F3663-5A7F-491E-B321-210DB75EC2E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{109F3663-5A7F-491E-B321-210DB75EC2E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{447475B4-5C04-492C-B477-ECD922A7CE49} = {D6661C41-E522-4D59-AA35-6CF6702AE84B}
 		{109F3663-5A7F-491E-B321-210DB75EC2E3} = {90C41829-979D-4029-99B9-FC86CE275D89}
+		{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D} = {2F851852-8D02-4E62-871F-376D3A88D9E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1702817C-9529-4637-8EB0-A156B17FD676}

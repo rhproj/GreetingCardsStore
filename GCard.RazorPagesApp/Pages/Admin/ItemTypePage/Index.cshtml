@@ -1,0 +1,45 @@
+﻿@page
+@model GCard.RazorPagesApp.Pages.Admin.ItemTypePage.IndexModel
+@{
+}
+
+@*@if(TempData["success"]!=null){
+    <h3>@TempData["success"]</h3>
+}*@
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Product Types:</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-page="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i> &nbsp; Add Type
+            </a>
+        </div>
+    </div>
+    <br/><br/>
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Битность</th>
+                <th>Display Order</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.ItemTypes)
+            {
+                <tr>
+                    <td> @p.Name</td>
+                    <td> @p.DisplayOrder</td>
+                    <td>
+                        <a asp-page="Edit" asp-route-id="@p.Id" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
+                        <a asp-page="Delete" asp-route-id="@p.Id" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
