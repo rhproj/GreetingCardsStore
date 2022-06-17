@@ -25,7 +25,7 @@ namespace GCard.RazorPagesApp.Pages.Admin.ItemTypePage
             {
                 _repoService.ItemTypeRepository.Add(ItemType); 
                 _repoService.Save(); 
-                //TempData["success"] = "Новая консоль добавлена";
+                //TempData["success"] = "";
                 return RedirectToPage("Index");
             }
             return Page();
