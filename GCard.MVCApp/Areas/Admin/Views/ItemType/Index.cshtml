@@ -1,11 +1,4 @@
-﻿@page
-@model GCard.RazorPagesApp.Pages.Admin.ItemTypePage.IndexModel
-@{
-}
-
-@*@if(TempData["success"]!=null){
-    <h3>@TempData["success"]</h3>
-}*@
+﻿@model IEnumerable<GCard.Model.ItemType>
 
 <div class="container p-3">
     <div class="row pt-4">
@@ -28,17 +21,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var p in Model.ItemTypes)
+            @foreach (var p in Model)
             {
                 <tr>
                     <td> @p.Name</td>
                     <td> @p.DisplayOrder</td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@p.Id" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
-                        <a asp-page="Delete" asp-route-id="@p.Id" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="CoverType" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-primary mx-2">
+                               <i class="bi bi-pencil-square"></i> Edit</a>
+                            <a asp-controller="CoverType" asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger mx-2">
+                               <i class="bi bi-x-circle"></i> Delete</a>
+                        </div> 
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+

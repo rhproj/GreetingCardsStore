@@ -1,4 +1,4 @@
-﻿using GCard.MVCApp.Models;
+﻿using GCard.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

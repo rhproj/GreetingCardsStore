@@ -1,4 +1,4 @@
-using GCard.MVCApp.Data;
+using GCard.DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

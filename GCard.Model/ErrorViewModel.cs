@@ -1,4 +1,4 @@
-namespace GCard.MVCApp.Models
+namespace GCard.Model
 {
     public class ErrorViewModel
     {
