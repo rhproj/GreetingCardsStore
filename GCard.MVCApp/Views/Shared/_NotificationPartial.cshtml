@@ -1,0 +1,8 @@
+﻿@if(TempData["success"] != null)
+{
+     <h3 class="text-success">@TempData["success"]</h3>
+}
+@if(TempData["error"] != null)
+{
+     <h3 class="text-danger">@TempData["error"]</h3>
+}

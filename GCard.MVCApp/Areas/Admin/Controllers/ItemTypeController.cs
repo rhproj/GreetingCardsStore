@@ -7,7 +7,7 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class ItemTypeController : Controller
     {
-        private readonly IRepositoryService _repoService; 
+        private readonly IRepositoryService _repoService;
         public ItemTypeController(IRepositoryService repoService)
         {
             _repoService = repoService;
@@ -26,7 +26,7 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
 
         //Post
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ItemType itemType)
         {
             if (ModelState.IsValid)

@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Admin\View\**" />
-    <Content Remove="Areas\Admin\View\**" />
-    <EmbeddedResource Remove="Areas\Admin\View\**" />
-    <None Remove="Areas\Admin\View\**" />
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GCard.DataAccess\GCard.DataAccess.csproj" />
     <ProjectReference Include="..\GCard.Model\GCard.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>

@@ -1,12 +1,11 @@
 ﻿@page
 @model GCard.RazorPagesApp.Pages.Admin.ItemTypePage.IndexModel
-@{
-}
 
 @*@if(TempData["success"]!=null){
     <h3>@TempData["success"]</h3>
-}*@
-
+}
+*@
+<partial name="_NotificationPartial"/>
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -19,7 +18,7 @@
         </div>
     </div>
     <br/><br/>
-    <table class="table table-bordered table-striped" style="width:100%">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Type</th>
