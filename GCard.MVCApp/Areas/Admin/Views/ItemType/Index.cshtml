@@ -15,15 +15,15 @@
         </div>
     </div>
     <br/><br/>
-    <table class="table table-hover">
+    <table id="tblData" class="table table-hover">
         <thead>
             <tr>
-                <th>Type</th>
+                <th>Name</th>
                 <th>Display Order</th>
-                <th></th>
+                @*<th></th>*@
             </tr>
         </thead>
-        <tbody>
+@*        <tbody>
             @foreach (var p in Model)
             {
                 <tr>
@@ -35,6 +35,10 @@
                     </td>
                 </tr>
             }
-        </tbody>
+        </tbody>*@
     </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/itemtype.js"></script>
+}

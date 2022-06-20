@@ -1,4 +1,4 @@
-﻿@model GCard.Model.ItemType //Product заменили //модель внутри View не всегда есть модель кот-ю мы пасуем ч/з контроллер, но если мы пасуем ч/з контроллер он должен совпадать тому что внутри Kонтроллера и View
+﻿@model GCard.Model.ItemType
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data"> <!--submit to the same action of the name GET method ei Edit-->
     <input asp-for="Id" hidden/>
@@ -7,14 +7,14 @@
         <div class="col-10">
             <div class="border p-3 mt-4 row" >
                 <div class="row pb-2">
-                    <h2 class="text-primary">@(Model.Id!=0?"Edit":"Create")</h2><hr/>
+                    <h2 class="text-primary">@(Model.Id!=0?"Update":"Create") Item Type</h2><hr/>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Name"></label>
                     <input asp-for="Name" class="form-control"/>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                 <div class="mb-3 col-6">
+                 <div class="mb-3">
                     <label asp-for="DisplayOrder"></label>
                     <input asp-for="DisplayOrder" class="form-control"/>
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>
@@ -24,14 +24,14 @@
                 <div class="col-12"> 
                     @if(@Model.Id != 0)
                     {
-                        <button type="submit" class="btn btn-primary" style="width:150px">Изменить</button>
+                        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
                     }
                     else
                     {
-                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Cоздать</button>
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
                     }
-                    <a asp-controller="Book" asp-action="Index" class="btn btn-secondary" style="width:150px">
-                        Назад к Списку
+                    <a asp-controller="ItemType" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        Back to List
                     </a>
                 </div>
 
@@ -42,7 +42,7 @@
 
 @section Scripts{
     @{
-    <partial name ="_ValidationScriptsPartial"/>
+        <partial name ="_ValidationScriptsPartial"/>
     }
     <script>
         tinymce.init({
