@@ -1,0 +1,63 @@
+﻿@model GCard.Model.ItemType //Product заменили //модель внутри View не всегда есть модель кот-ю мы пасуем ч/з контроллер, но если мы пасуем ч/з контроллер он должен совпадать тому что внутри Kонтроллера и View
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data"> <!--submit to the same action of the name GET method ei Edit-->
+    <input asp-for="Id" hidden/>
+
+    <div class="row">
+        <div class="col-10">
+            <div class="border p-3 mt-4 row" >
+                <div class="row pb-2">
+                    <h2 class="text-primary">@(Model.Id!=0?"Edit":"Create")</h2><hr/>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                 <div class="mb-3 col-6">
+                    <label asp-for="DisplayOrder"></label>
+                    <input asp-for="DisplayOrder" class="form-control"/>
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                </div>
+
+                <br/><br/><hr/>
+                <div class="col-12"> 
+                    @if(@Model.Id != 0)
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:150px">Изменить</button>
+                    }
+                    else
+                    {
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Cоздать</button>
+                    }
+                    <a asp-controller="Book" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        Назад к Списку
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+    <partial name ="_ValidationScriptsPartial"/>
+    }
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+          toolbar_mode: 'floating',
+        });
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Загрузите картинку',
+            });
+                return false;
+            } return true;
+    </script>
+}

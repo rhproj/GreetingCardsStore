@@ -8,9 +8,11 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
     public class ItemTypeController : Controller
     {
         private readonly IRepositoryService _repoService;
-        public ItemTypeController(IRepositoryService repoService)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public ItemTypeController(IRepositoryService repoService, IWebHostEnvironment hostEnvironment)
         {
             _repoService = repoService;
+            _hostEnvironment = hostEnvironment;
         }
 
         public IActionResult Index()
@@ -18,30 +20,35 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
             IEnumerable<ItemType> itemTypeList = _repoService.ItemTypeRepository.GetAll();
             return View(itemTypeList);
         }
-        //Get
-        public IActionResult Create()
+
+        //GET
+        public IActionResult Upsert(int? id)
         {
-            return View();
+            ItemType itemType = new();
+            //{
+            //    Product = new(),
+            //    CategoryList = _repoService.CategoryRepo.GetAll()
+            //        .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() }),
+            //    CoverTypeList = _repoService.CoverTypeRepo.GetAll()
+            //        .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() })
+            //};
+            if (id == null || id == 0) //create
+            {
+                return View(itemType);//NotFound();
+            }
+            else //update
+            {
+                itemType = _repoService.ItemTypeRepository.GetWithCondition(i=>i.Id == id);    //ProductRepo.GetWithCondition(p => p.Id == id); ;
+                return View(itemType);
+            }
         }
 
         //Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ItemType itemType)
+        public IActionResult Upsert(ItemType itemType)
         {
-            if (ModelState.IsValid)
-            {
-                if (itemType.Name.Length < 3)
-                {
-                    ModelState.AddModelError(string.Empty, "less than 3");
-                    return View(itemType);
-                }
-                _repoService.ItemTypeRepository.Add(itemType);
-                _repoService.Save();
-                //TempData["success"] = "";
-                return RedirectToAction("Index");
-            }
-            return View(itemType); //stay on that view
+            return NotFound();
         }
     }
 }
