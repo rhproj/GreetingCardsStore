@@ -2,7 +2,7 @@
 @model GCard.RazorPagesApp.Pages.Admin.ItemTypePage.UpsertModel
 
 <form method="post">
-@*    <input asp-for="Id" hidden/>*@
+    <input asp-for="ItemType.Id" hidden/>
  <div class="row pb-2">
         <div class="col-10">
             <div class="border p-3 mt-4 row" >
@@ -22,8 +22,8 @@
 
                 <br/><br/><hr/>
                 <div class="col-12"> 
-                    <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ItemType.Id!=0?"Обновить":"Создать")</button>
-                    <a asp-controller="ItemType" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                    <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ItemType.Id!=0?"Update":"Create")</button>
+                    <a asp-page="Index" class="btn btn-secondary" style="width:150px">
                         Back to List
                     </a>
                 </div>
@@ -37,7 +37,7 @@
     @{
         <partial name ="_ValidationScriptsPartial"/>
     }
-    <script>
+@*    <script>
         tinymce.init({
           selector: 'textarea',
           plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
@@ -52,31 +52,5 @@
             });
                 return false;
             } return true;
-    </script>
+    </script>*@
 }
-
-
-@*<form method="post">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2>Item Type</h2>
-            <hr/>
-        </div>
-        <div class="mb-3">
-            <label asp-for="ItemType.Name"></label>
-            <input asp-for="ItemType.Name" class="form-control"/>
-            <span asp-validation-for="ItemType.Name" class="text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="ItemType.DisplayOrder"></label>
-            <input asp-for="ItemType.DisplayOrder" class="form-control"/>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:150px;">Create</button>
-    </div>
-</form>
-
-@section Scripts{
-    @{
-        <partial name ="_ValidationScriptsPartial"/>
-    }
-}*@

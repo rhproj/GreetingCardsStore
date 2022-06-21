@@ -53,14 +53,22 @@ namespace GCard.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public void Add(T entity) => dbSet.Add(entity);
+        public void Add(T entity)
+        {
+            dbSet.Add(entity);
+            _dbContext.SaveChanges();
+        }
 
         public void Delete(T entity) => dbSet.Remove(entity);
 
         public void DeleteRange(IEnumerable<T> rangeVals) => dbSet.RemoveRange(rangeVals);
 
-        public void Save() => _dbContext.SaveChanges();
+        //public void Save() => _dbContext.SaveChanges();
 
-        public void Update(T entity) => dbSet.Update(entity);
+        public void Update(T entity)
+        {
+            dbSet.Update(entity);
+            _dbContext.SaveChanges();
+        }
     }
 }
