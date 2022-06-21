@@ -25,13 +25,6 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
         public IActionResult Upsert(int? id)
         {
             ItemType itemType = new();
-            //{
-            //    Product = new(),
-            //    CategoryList = _repoService.CategoryRepo.GetAll()
-            //        .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() }),
-            //    CoverTypeList = _repoService.CoverTypeRepo.GetAll()
-            //        .Select(i => new SelectListItem() { Text = i.Name, Value = i.Id.ToString() })
-            //};
             if (id == null || id == 0) 
             {
                 return View(itemType);//NotFound();
@@ -48,14 +41,16 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ItemType itemType)
         {
-            if (ModelState.IsValid)
-            {
-                _repoService.ItemTypeRepository.Add(itemType);
-                _repoService.Save();
-                TempData["success"] = "Item type added succesfully";
-                return RedirectToAction("Index");
-            }
-            return View(itemType);
+            _repoService.ItemTypeRepository.Add(itemType);
+            _repoService.Save();
+            TempData["success"] = "Item type added succesfully";
+            return RedirectToAction("Index");
+
+            //if (ModelState.IsValid)
+            //{
+
+            //}
+            //return View(itemType);
         }
 
         #region API

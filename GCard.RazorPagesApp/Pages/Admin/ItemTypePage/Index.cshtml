@@ -18,26 +18,30 @@
         </div>
     </div>
     <br/><br/>
-    <table class="table table-hover">
+    <table id="tblData" class="table table-hover">
         <thead>
             <tr>
-                <th>Type</th>
+                <th>Name</th>
                 <th>Display Order</th>
                 <th></th>
             </tr>
         </thead>
 @*        <tbody>
-            @foreach (var p in Model.ItemTypes)
+            @foreach (var p in Model)
             {
                 <tr>
                     <td> @p.Name</td>
                     <td> @p.DisplayOrder</td>
                     <td>
-                        <a asp-page="Edit" asp-route-id="@p.Id" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
-                        <a asp-page="Delete" asp-route-id="@p.Id" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                            <a asp-controller="CoverType" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> </a>
+                            <a asp-controller="CoverType" asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger mx-2"><i class="bi bi-x-circle"></i> </a>
                     </td>
                 </tr>
             }
         </tbody>*@
     </table>
 </div>
+
+@section Scripts{
+    <script src="~/js/itemtype.js"></script>
+}
