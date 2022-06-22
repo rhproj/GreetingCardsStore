@@ -5,22 +5,27 @@ namespace GCard.RazorPagesApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemTypeController : Controller
+    public class DataTableController : Controller
     {
         private readonly IRepositoryService _repoService;
-        public ItemTypeController(IRepositoryService repoService)
+        public DataTableController(IRepositoryService repoService)
         {
             _repoService = repoService;
         }
 
-        #region API
         [HttpGet]
         public IActionResult GetAll()
         {
             var itemTypeList = _repoService.ItemTypeRepository.GetAll();
             return Json(new { data = itemTypeList });
         }
-        #endregion
+
+        [HttpGet("getAllOccasions")]
+        public IActionResult GetAllOccasions()
+        {
+            var occasionsList = _repoService.OccasionRepository.GetAll();
+            return Json(new { data = occasionsList });
+        }
 
 
         //[HttpDelete("{id}")]

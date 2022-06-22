@@ -7,19 +7,18 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/api/DataTable"
+            "url": "/api/DataTable/getAllOccasions"
         },
         "columns": [
-            { "data": "name", "width": "50%" },
-            { "data": "displayOrder", "width": "25%" },
+            { "data": "name", "width": "75%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                     <div class="w-75 btn-group" role="group">
-                        <a href="/Admin/ItemTypePage/Upsert?id=${data}"
+                        <a href="/Admin/OccasionPage/Upsert?id=${data}"
                         class="btn btn-success mx-2"><i class="bi bi-pencil-square"></i> </a>
-                        <a onClick=Delete('/Admin/ItemType/Delete/${data}')
+                        <a onClick=Delete('/Admin/Occasion/Delete/${data}')
                         class="btn btn-danger mx-2"><i class="bi bi-x-circle"></i> </a>
                     </div>
                     `

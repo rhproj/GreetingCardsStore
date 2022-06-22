@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.DataAccess", "GCard.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.RazorPagesApp", "GCard.RazorPagesApp\GCard.RazorPagesApp.csproj", "{9B80CAFA-576D-4AD7-9C02-6D7A07B0642D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCard.MVCApp", "GCard.MVCApp\GCard.MVCApp.csproj", "{12B7B9E0-7D91-401E-BE8E-02657E40507B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.MVCApp", "GCard.MVCApp\GCard.MVCApp.csproj", "{12B7B9E0-7D91-401E-BE8E-02657E40507B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

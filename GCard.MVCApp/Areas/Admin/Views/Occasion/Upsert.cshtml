@@ -1,4 +1,4 @@
-﻿@model GCard.Model.ItemType
+﻿@model GCard.Model.Occasion
 
 <form method="post" asp-action="Upsert">
     <input asp-for="Id" hidden/>
@@ -7,23 +7,17 @@
         <div class="col-10">
             <div class="border p-3 mt-4 row" >
                 <div class="row pb-2">
-                    <h2 class="text-primary">@(Model.Id!=0?"Update":"Create") Item Type</h2><hr/>
+                    <h2 class="text-primary">@(Model.Id!=0?"Update":"Create") Occasion</h2><hr/>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Name"></label>
                     <input asp-for="Name" class="form-control"/>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                 <div class="mb-3">
-                    <label asp-for="DisplayOrder"></label>
-                    <input asp-for="DisplayOrder" class="form-control"/>
-                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
-                </div>
-
                 <br/><br/><hr/>
                 <div class="col-12"> 
                     <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.Id!=0?"Update":"Create")</button>
-                    <a asp-controller="ItemType" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                    <a asp-controller="Occasion" asp-action="Index" class="btn btn-secondary" style="width:150px">
                         Back to List
                     </a>
                 </div>
@@ -55,16 +49,3 @@
     </script>
 }
 
-
-
-
-
-
-@*@if(@Model.Id != 0)
-{
-    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-}
-else
-{
-    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
-}*@
