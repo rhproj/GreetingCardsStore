@@ -1,6 +1,7 @@
 ﻿@page
 @model GCard.RazorPagesApp.Pages.Admin.ProductItemPage.IndexModel
 
+<partial name="_NotificationPartial"/>
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -13,7 +14,7 @@
         </div>
     </div>
     <br/><br/>
-    <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <table id="tblData" class="table table-hover">
         <thead>
             <tr>
                 <th>Name</th>

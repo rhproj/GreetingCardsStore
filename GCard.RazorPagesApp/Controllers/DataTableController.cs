@@ -14,14 +14,14 @@ namespace GCard.RazorPagesApp.Controllers
         }
 
         [HttpGet("getAllProducts")]
-        public IActionResult GetAllOccasions()
+        public IActionResult GetAllProductItems()
         {
-            var occasionsList = _repoService.OccasionRepository.GetAll();
-            return Json(new { data = occasionsList });
+            var productList = _repoService.ProductItemRepository.GetAll();
+            return Json(new { data = productList });
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("getAllTypes")]
+        public IActionResult GetAllItemTypes()
         {
             var itemTypeList = _repoService.ItemTypeRepository.GetAll();
             return Json(new { data = itemTypeList });
