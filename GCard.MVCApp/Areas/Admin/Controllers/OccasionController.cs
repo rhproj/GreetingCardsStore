@@ -58,6 +58,19 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
             var occasionsList = _repoService.OccasionRepository.GetAll();
             return Json(new { data = occasionsList });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var occasion = _repoService.OccasionRepository.GetWithCondition(i => i.Id == id);
+            if (occasion == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _repoService.OccasionRepository.Delete(occasion);
+
+            return Json(new { success = true, message = "Deleted successfully" });
+        }
         #endregion
     }
 }

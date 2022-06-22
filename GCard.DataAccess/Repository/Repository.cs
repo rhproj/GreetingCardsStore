@@ -59,9 +59,17 @@ namespace GCard.DataAccess.Repository
             _dbContext.SaveChanges();
         }
 
-        public void Delete(T entity) => dbSet.Remove(entity);
+        public void Delete(T entity)
+        {
+            dbSet.Remove(entity);
+            _dbContext.SaveChanges();
+        }
 
-        public void DeleteRange(IEnumerable<T> rangeVals) => dbSet.RemoveRange(rangeVals);
+        public void DeleteRange(IEnumerable<T> rangeVals)
+        {
+            dbSet.RemoveRange(rangeVals);
+            _dbContext.SaveChanges();
+        }
 
         //public void Save() => _dbContext.SaveChanges();
 

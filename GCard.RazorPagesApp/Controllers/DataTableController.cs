@@ -27,22 +27,29 @@ namespace GCard.RazorPagesApp.Controllers
             return Json(new { data = occasionsList });
         }
 
+        [HttpDelete("deleteItemType/{id}")]
+        public IActionResult DeleteItemType(int? id)
+        {
+            var itemType = _repoService.ItemTypeRepository.GetWithCondition(i => i.Id == id);
+            if (itemType == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _repoService.ItemTypeRepository.Delete(itemType);
 
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    var mIfromDb = _repoWrapper.MenuItemRepo.GetWithCondition(m => m.Id == id);
-        //    //удаляя запись картинка к нему больше не нужна - удаляем:
-        //    var oldImgFile = Path.Combine(_hostEnvironment.WebRootPath, mIfromDb.Image.TrimStart('\\'));
-        //    if (System.IO.File.Exists(oldImgFile))
-        //    {
-        //        System.IO.File.Delete(oldImgFile);
-        //    }
+            return Json(new { success = true, message = "Deleted successfully" });
+        }
 
-        //    _repoWrapper.MenuItemRepo.Delete(mIfromDb);
-        //    _repoWrapper.Save();
-
-        //    return Json(new { success = true, message = "Успешно удалено" }); //анонимный класс?
-        //}
+        [HttpDelete("deleteOccasion/{id}")]
+        public IActionResult DeleteOccasion(int? id)
+        {
+            var occasion = _repoService.OccasionRepository.GetWithCondition(i => i.Id == id);
+            if (occasion == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _repoService.OccasionRepository.Delete(occasion);
+            return Json(new { success = true, message = "Deleted successfully" });
+        }
     }
 }

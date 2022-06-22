@@ -60,6 +60,21 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
             var itemTypeList = _repoService.ItemTypeRepository.GetAll();
             return Json(new { data = itemTypeList });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var itemType = _repoService.ItemTypeRepository.GetWithCondition(i=>i.Id == id);
+            if (itemType == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" }); //
+            }
+            _repoService.ItemTypeRepository.Delete(itemType);
+
+            return Json(new { success = true, message = "Deleted successfully" });
+        }
         #endregion
     }
 }
+
+//API Endpoint to use SweetAlert
