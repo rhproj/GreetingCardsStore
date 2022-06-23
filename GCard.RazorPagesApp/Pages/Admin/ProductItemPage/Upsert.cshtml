@@ -1,20 +1,21 @@
 ﻿@page
 @model GCard.RazorPagesApp.Pages.Admin.ProductItemPage.UpsertModel
 
-<form method="post" enctype="multipart/form-data"> <!--img uploads-->
- <input asp-for="ProductItemVM.ProductItem.Id" hidden/>
- <div class="row pb-2">
-        <div class="col-10">
-            <div class="border p-3 mt-4 row" >
-                <div class="row pb-2">
-                    <h2 class="text-primary">@(Model.ProductItemVM.ProductItem.Id!=0 ? "Update":"Create") Item Type</h2><hr/>
-                </div>
+<form method="post" enctype="multipart/form-data">
+    <!--img uploads-->
+    <input asp-for="ProductItemVM.ProductItem.Id" hidden />
+    <div class="border p-3 mt-4 row">
+
+        <div class="row pb-2">
+            <div class="col-9">
+                <h2 class="text-primary">@(Model.ProductItemVM.ProductItem.Id!=0 ? "Update":"Create") Item Type</h2><hr />
+
                 <div class="mb-3">
                     <label asp-for="ProductItemVM.ProductItem.Name"></label>
-                    <input asp-for="ProductItemVM.ProductItem.Name" class="form-control"/>
+                    <input asp-for="ProductItemVM.ProductItem.Name" class="form-control" />
                     <span asp-validation-for="ProductItemVM.ProductItem.Name" class="text-danger"></span>
                 </div>
-                 <div class="mb-3">
+                <div class="mb-3">
                     <label asp-for="ProductItemVM.ProductItem.Description"></label>
                     <textarea asp-for="ProductItemVM.ProductItem.Description" class="form-control"></textarea>
                     <span asp-validation-for="ProductItemVM.ProductItem.Description" class="text-danger"></span>
@@ -35,44 +36,53 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="ProductItemVM.ProductItem.Price"></label>
-                    <input asp-for="ProductItemVM.ProductItem.Price" class="form-control"/>
+                    <input asp-for="ProductItemVM.ProductItem.Price" class="form-control" />
                     <span asp-validation-for="ProductItemVM.ProductItem.Price" class="text-danger"></span>
                 </div>
-                 <div class="mb-3">
+                <div class="mb-3">
                     <label asp-for="ProductItemVM.ProductItem.WholesalePrice"></label>
-                    <input asp-for="ProductItemVM.ProductItem.WholesalePrice" class="form-control"/>
+                    <input asp-for="ProductItemVM.ProductItem.WholesalePrice" class="form-control" />
                     <span asp-validation-for="ProductItemVM.ProductItem.WholesalePrice" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="ProductItemVM.ProductItem.Image"></label>
-                    <input type="file" name="files" class="form-control"/>  <!-- id="uploadBox"  asp-for="ProductItem.Image"-->
+                    <input type="file" id="uploadBox" name="file" class="form-control" />  <!--   asp-for="ProductItem.Image"-->
                 </div>
-
-
-
-                <br/><br/><hr/>
-                <div class="col-12"> 
-                    <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ProductItemVM.ProductItem.Id!=0?"Update":"Create")</button>
-                    <a asp-page="Index" class="btn btn-secondary" style="width:150px">
-                        Back to List
-                    </a>
-                </div>
-
+            </div>
+            <div class="col-3">
+                @if (Model.ProductItemVM.ProductItem.Id != 0)//new ones won't have imgs just yet
+                {
+                    <img src="@Model.ProductItemVM.ProductItem.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9"/>
+                }
             </div>
         </div>
-  </div>
+
+
+        <br /><br /><hr />
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ProductItemVM.ProductItem.Id!=0?"Update":"Create")</button>
+            <a asp-page="Index" class="btn btn-secondary" style="width:150px">
+                Back to List
+            </a>
+        </div>
+
+    </div>
+@*    <div class="row pb-2">
+        <div class="col-10">
+        </div>
+    </div>*@
 </form>
 
 @section Scripts{
     <script>
-      tinymce.init({
-        selector: 'textarea',
-        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
-        toolbar_mode: 'floating',
-      });
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
     </script>
     @{
-        <partial name ="_ValidationScriptsPartial"/>
+        <partial name="_ValidationScriptsPartial" />
     }
-}
+    }

@@ -14,7 +14,7 @@ function loadDataTable() {
             { "data": "occasion.name", "width": "15%" },
             { "data": "itemType.name", "width": "15%" },
             { "data": "price", "width": "15%" },
-            { "data": "wholesale", "width": "15%" },
+            { "data": "wholesalePrice", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

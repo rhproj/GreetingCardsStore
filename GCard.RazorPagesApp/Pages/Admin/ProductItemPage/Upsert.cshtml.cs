@@ -29,31 +29,56 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
         {
             if (id != null)
             {
-                //ProductItemVM = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == id);
+                ProductItemVM.ProductItem = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == id);
             }
         }
 
-        public IActionResult OnPost(IFormFile file)
+        public IActionResult OnPost(IFormFile? file) //var files = HttpContext.Request.Form.Files;
         {
-            string wwwRootPath = _hostEnvironment.WebRootPath;
-            var files = HttpContext.Request.Form.Files;
-
-            if (ProductItemVM.ProductItem.Id == 0)
+            if (ModelState.IsValid)
             {
-                var fileName = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(wwwRootPath, @"img\productItems");
-                var extension = Path.GetExtension(files[0].FileName);
+                var wwwRootPath = _hostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    var fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"img\productItems");
+                    var extension = Path.GetExtension(file.FileName);
 
-                //_repoService.ProductItemRepository.Add(ProductItemVM);
-                TempData["success"] = "New Type successfully added";
-            }
-            else
-            {
-                //_repoService.ProductItemRepository.Update(ProductItemVM);
-                TempData["success"] = "Type successfully updated";
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    ProductItemVM.ProductItem.Image = @"\img\productItems\" + fileName + extension;
+                }
+
+
+                if (ProductItemVM.ProductItem.Id == 0)
+                {
+                    _repoService.ProductItemRepository.Add(ProductItemVM.ProductItem);
+                    TempData["success"] = "Product added successfully";
+                }
+                else
+                {
+                    _repoService.ProductItemRepository.Update(ProductItemVM.ProductItem);
+                    TempData["success"] = "Product updated successfully";
+                }
+
+
+                //if (ProductItemVM.ProductItem.Id == 0)
+                //{
+
+                //    //_repoService.ProductItemRepository.Add(ProductItemVM);
+                //    TempData["success"] = "New Type successfully added";
+                //}
+                //else
+                //{
+                //    //_repoService.ProductItemRepository.Update(ProductItemVM);
+                //    TempData["success"] = "Type successfully updated";
+                //}
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
+            return new PageResult(); //stay
         }
     }
 }
