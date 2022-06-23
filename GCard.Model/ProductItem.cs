@@ -14,6 +14,7 @@ namespace GCard.Model
         [Range(0, Double.PositiveInfinity, ErrorMessage = "Out of range")]
         public decimal Price { get; set; }
         [Range(0, Double.PositiveInfinity, ErrorMessage = "Out of range")]
+        [Display(Name = "Wholesale Price")]
         public decimal WholesalePrice { get; set; }
 
         [Display(Name = "Type")]

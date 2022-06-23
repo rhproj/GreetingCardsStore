@@ -16,7 +16,7 @@ namespace GCard.RazorPagesApp.Controllers
         [HttpGet("getAllProducts")]
         public IActionResult GetAllProductItems()
         {
-            var productList = _repoService.ProductItemRepository.GetAll();
+            var productList = _repoService.ProductItemRepository.GetAll(includeProp: "ItemType,Occasion");
             return Json(new { data = productList });
         }
 
@@ -32,6 +32,19 @@ namespace GCard.RazorPagesApp.Controllers
         {
             var occasionsList = _repoService.OccasionRepository.GetAll();
             return Json(new { data = occasionsList });
+        }
+
+        [HttpDelete("deleteProduct/{id}")]
+        public IActionResult DeleteProductItem(int? id)
+        {
+            var productItem = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == id);
+            if (productItem == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            _repoService.ProductItemRepository.Delete(productItem);
+
+            return Json(new { success = true, message = "Deleted successfully" });
         }
 
         [HttpDelete("deleteItemType/{id}")]

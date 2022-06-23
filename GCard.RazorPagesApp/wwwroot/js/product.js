@@ -11,8 +11,8 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "name", "width": "25%" },
-            { "data": "occasion", "width": "15%" },
-            { "data": "itemType", "width": "15%" },
+            { "data": "occasion.name", "width": "15%" },
+            { "data": "itemType.name", "width": "15%" },
             { "data": "price", "width": "15%" },
             { "data": "wholesale", "width": "15%" },
             {
@@ -22,7 +22,7 @@ function loadDataTable() {
                     <div class="w-75 btn-group" role="group">
                         <a href="/Admin/ProductItemPage/Upsert?id=${data}"
                         class="btn btn-success mx-2"><i class="bi bi-pencil-square"></i> </a>
-                        <a onClick=Delete('/api/DataTable/deleteProductItem/${data}')
+                        <a onClick=Delete('/api/DataTable/deleteProduct/${data}')
                         class="btn btn-danger mx-2"><i class="bi bi-trash"></i></a>
                     </div>
                     `

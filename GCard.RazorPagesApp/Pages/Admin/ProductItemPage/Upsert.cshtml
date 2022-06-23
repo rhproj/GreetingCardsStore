@@ -1,0 +1,78 @@
+﻿@page
+@model GCard.RazorPagesApp.Pages.Admin.ProductItemPage.UpsertModel
+
+<form method="post" enctype="multipart/form-data"> <!--img uploads-->
+ <input asp-for="ProductItemVM.ProductItem.Id" hidden/>
+ <div class="row pb-2">
+        <div class="col-10">
+            <div class="border p-3 mt-4 row" >
+                <div class="row pb-2">
+                    <h2 class="text-primary">@(Model.ProductItemVM.ProductItem.Id!=0 ? "Update":"Create") Item Type</h2><hr/>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProductItemVM.ProductItem.Name"></label>
+                    <input asp-for="ProductItemVM.ProductItem.Name" class="form-control"/>
+                    <span asp-validation-for="ProductItemVM.ProductItem.Name" class="text-danger"></span>
+                </div>
+                 <div class="mb-3">
+                    <label asp-for="ProductItemVM.ProductItem.Description"></label>
+                    <textarea asp-for="ProductItemVM.ProductItem.Description" class="form-control"></textarea>
+                    <span asp-validation-for="ProductItemVM.ProductItem.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="ProductItemVM.ProductItem.ItemTypeId"></label>
+                    <select asp-for="ProductItemVM.ProductItem.ItemTypeId" asp-items="Model.ProductItemVM.ItemTypeList" class="form-select">
+                        <option disabled selected>--Item Type--</option>
+                    </select>
+                    <span asp-validation-for="ProductItemVM.ProductItem.ItemTypeId" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="ProductItemVM.ProductItem.OccasionId"></label>
+                    <select asp-for="ProductItemVM.ProductItem.OccasionId" asp-items="Model.ProductItemVM.OccasionList" class="form-select">
+                        <option disabled selected>--Occasion--</option>
+                    </select>
+                    <span asp-validation-for="ProductItemVM.ProductItem.OccasionId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProductItemVM.ProductItem.Price"></label>
+                    <input asp-for="ProductItemVM.ProductItem.Price" class="form-control"/>
+                    <span asp-validation-for="ProductItemVM.ProductItem.Price" class="text-danger"></span>
+                </div>
+                 <div class="mb-3">
+                    <label asp-for="ProductItemVM.ProductItem.WholesalePrice"></label>
+                    <input asp-for="ProductItemVM.ProductItem.WholesalePrice" class="form-control"/>
+                    <span asp-validation-for="ProductItemVM.ProductItem.WholesalePrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductItemVM.ProductItem.Image"></label>
+                    <input type="file" name="files" class="form-control"/>  <!-- id="uploadBox"  asp-for="ProductItem.Image"-->
+                </div>
+
+
+
+                <br/><br/><hr/>
+                <div class="col-12"> 
+                    <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ProductItemVM.ProductItem.Id!=0?"Update":"Create")</button>
+                    <a asp-page="Index" class="btn btn-secondary" style="width:150px">
+                        Back to List
+                    </a>
+                </div>
+
+            </div>
+        </div>
+  </div>
+</form>
+
+@section Scripts{
+    <script>
+      tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+        toolbar_mode: 'floating',
+      });
+    </script>
+    @{
+        <partial name ="_ValidationScriptsPartial"/>
+    }
+}

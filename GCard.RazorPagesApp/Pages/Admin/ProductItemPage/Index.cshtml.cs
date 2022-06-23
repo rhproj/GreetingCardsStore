@@ -16,7 +16,7 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
 
         public void OnGet()
         {
-            ProductItems = _repoService.ProductItemRepository.GetAll();
+           // ProductItems = _repoService.ProductItemRepository.GetAll();
         }
     }
 }
