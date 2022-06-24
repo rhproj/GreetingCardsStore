@@ -31,4 +31,8 @@
     <ProjectReference Include="..\GCard.Model\GCard.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\productItems\" />
+  </ItemGroup>
+
 </Project>

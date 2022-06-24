@@ -1,0 +1,31 @@
+﻿<partial name="_NotificationPartial"/>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Product List:</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a  asp-controller="ProductItem" asp-action="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-square"></i> &nbsp; Add Product
+            </a>
+        </div>
+    </div>
+    <br/><br/>
+    <table id="tblData" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Occasion</th>
+                <th>ItemType</th>
+                <th>Price</th>
+                <th>Wholesale</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

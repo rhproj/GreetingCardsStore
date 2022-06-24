@@ -1,0 +1,90 @@
+﻿@model GCard.Model.ViewModels.ProductItemVM
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data"> 
+    <input asp-for="ProductItem.Id" hidden />
+
+    <div class="border p-3 mt-4 row">
+        <div class="row pb-2">
+            <div class="col-9">
+                <h2 class="text-primary">@(Model.ProductItem.Id!=0 ? "Update":"Create") Item Type</h2><hr />
+
+                <div class="mb-3">
+                    <label asp-for="ProductItem.Name"></label>
+                    <input asp-for="ProductItem.Name" class="form-control" />
+                    <span asp-validation-for="ProductItem.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProductItem.Description"></label>
+                    <textarea asp-for="ProductItem.Description" class="form-control"></textarea>
+                    <span asp-validation-for="ProductItem.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="ProductItem.ItemTypeId"></label>
+                    <select asp-for="ProductItem.ItemTypeId" asp-items="Model.ItemTypeList" class="form-select">
+                        <option disabled selected>--Item Type--</option>
+                    </select>
+                    <span asp-validation-for="ProductItem.ItemTypeId" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="ProductItem.OccasionId"></label>
+                    <select asp-for="ProductItem.OccasionId" asp-items="Model.OccasionList" class="form-select">
+                        <option disabled selected>--Occasion--</option>
+                    </select>
+                    <span asp-validation-for="ProductItem.OccasionId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProductItem.Price"></label>
+                    <input asp-for="ProductItem.Price" class="form-control" />
+                    <span asp-validation-for="ProductItem.Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProductItem.WholesalePrice"></label>
+                    <input asp-for="ProductItem.WholesalePrice" class="form-control" />
+                    <span asp-validation-for="ProductItem.WholesalePrice" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductItem.Image"></label>
+                    <input type="file" name="file" id="uploadBox" class="form-control" />  <!--id="uploadBox"  asp-for="ProductItem.Image"-->
+                </div>
+            </div>
+            <div class="col-3">
+                @if (Model.ProductItem.Id != 0)//new ones won't have imgs just yet
+                {
+                    <img src="@Model.ProductItem.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9"/>
+                }
+            </div>
+        </div>
+
+        <br /><br /><hr />
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" style="width:150px;">@(Model.ProductItem.Id!=0?"Update":"Create")</button>
+            <a asp-controller="ProductItem" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                Back to List
+            </a>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Загрузите картинку',
+            });
+                return false;
+            } return true;
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
