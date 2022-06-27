@@ -152,8 +152,17 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            _repoService.ProductItemRepository.Delete(productItem);
 
+            if (productItem.Image != null)
+            {
+                var oldImgFile = Path.Combine(_hostEnvironment.WebRootPath, productItem.Image.TrimStart('\\'));
+                if (System.IO.File.Exists(oldImgFile))
+                {
+                    System.IO.File.Delete(oldImgFile);
+                }
+            }
+
+            _repoService.ProductItemRepository.Delete(productItem);
             return Json(new { success = true, message = "Deleted successfully" });
         }
         #endregion
