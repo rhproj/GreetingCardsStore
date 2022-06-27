@@ -4,6 +4,8 @@
 <form method="post" enctype="multipart/form-data">
     <!--img uploads-->
     <input asp-for="ProductItemVM.ProductItem.Id" hidden />
+    <input asp-for="ProductItemVM.ProductItem.Image" hidden/>
+
     <div class="border p-3 mt-4 row">
 
         <div class="row pb-2">
@@ -75,14 +77,14 @@
 </form>
 
 @section Scripts{
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
-            toolbar_mode: 'floating',
-        });
-    </script>
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-    }
+@{
+<partial name="_ValidationScriptsPartial" />
+}
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+        toolbar_mode: 'floating',
+    });
+</script>
+}

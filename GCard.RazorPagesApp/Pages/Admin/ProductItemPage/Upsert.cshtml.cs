@@ -36,131 +36,94 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
         public IActionResult OnPost() //IFormFile? file) //var files = HttpContext.Request.Form.Files;
         {
             var webRootPath = _hostEnvironment.WebRootPath; 
-            var files = HttpContext.Request.Form.Files; 
-            if (ProductItemVM.ProductItem.Id == 0) //т.е создаем новый
+            var files = HttpContext.Request.Form.Files;
+
+            if (files.Count > 0) //only if we pick an img
             {
-                if (files.Count > 0)
+                var fileNameNew = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(webRootPath, @"img\productItems");
+                var extension = Path.GetExtension(files[0].FileName); //renaming keeping same .ext
+
+                if (ProductItemVM.ProductItem.Image != null) //delet if already exists
                 {
-                    var fileNameNew = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"img\productItems");
-                    var extension = Path.GetExtension(files[0].FileName);
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
+                    var oldImgFile = Path.Combine(webRootPath, ProductItemVM.ProductItem.Image.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImgFile))
                     {
-                        files[0].CopyTo(fileStream);
-                    } //полю дадим значения пути до файла
-                    ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
+                        System.IO.File.Delete(oldImgFile);
+                    }
                 }
 
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                ProductItemVM.ProductItem.Image = @"\img\productItems\" + fileNameNew + extension; //update url
+            }
+
+            if (ProductItemVM.ProductItem.Id == 0)
+            {
                 _repoService.ProductItemRepository.Add(ProductItemVM.ProductItem);
+                TempData["success"] = "New Product added successfully";
             }
             else //редактируем сущ-ий
             {
-                var mIfromDb = _repoService.ProductItemRepository.GetWithCondition(m => m.Id == ProductItemVM.ProductItem.Id);
-                #region Change Image
-                if (files.Count > 0) //значит мы выбрали картинку, т.е хотим поменять картинку (ну если она вообще была)
-                {
-                    string fileNameNew = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"img\productItems");
-                    var extension = Path.GetExtension(files[0].FileName);
-
-                    if (mIfromDb.Image != null)
-                    {
-                        var oldImgFile = Path.Combine(webRootPath, mIfromDb.Image.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImgFile)) //если несущ-ет, значит пропускаем и сразу картинку ставим
-                        {
-                            System.IO.File.Delete(oldImgFile);
-                        }
-                    }
-
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
-                    {
-                        files[0].CopyTo(fileStream);
-                    }
-                    ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
-                }
-                #endregion
-                else  //значит оставляем старую картинку (это можно не писать, но мы подстрах-сь)
-                {
-                    ProductItemVM.ProductItem.Image = mIfromDb.Image;
-                }
                 _repoService.ProductItemRepository.Update(ProductItemVM.ProductItem);
+                TempData["success"] = "New Product updated successfully";
             }
-            files = null;
+
             return RedirectToPage("./Index");
 
 
-            //if (ModelState.IsValid)
+            //if (ProductItemVM.ProductItem.Id == 0) //т.е создаем новый
             //{
-            //    var wwwRootPath = _hostEnvironment.WebRootPath;
-
-            //    if (ProductItemVM.ProductItem.Id == 0)
+            //    if (files.Count > 0)
             //    {
-            //        if (file != null)
+            //        var fileNameNew = Guid.NewGuid().ToString();
+            //        var uploads = Path.Combine(webRootPath, @"img\productItems");
+            //        var extension = Path.GetExtension(files[0].FileName);
+            //        using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
             //        {
-            //            var fileName = Guid.NewGuid().ToString();
-            //            var uploads = Path.Combine(wwwRootPath, @"img\productItems");
-            //            var extension = Path.GetExtension(file.FileName);
-
-            //            using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-            //            {
-            //                file.CopyTo(fileStreams);
-            //            }
-            //            ProductItemVM.ProductItem.Image = @"\img\productItems\" + fileName + extension;
-            //        }
-
-            //        _repoService.ProductItemRepository.Add(ProductItemVM.ProductItem);
-            //        TempData["success"] = "Product added successfully";
+            //            files[0].CopyTo(fileStream);
+            //        } //полю дадим значения пути до файла
+            //        ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
             //    }
-            //    else
+
+            //    _repoService.ProductItemRepository.Add(ProductItemVM.ProductItem);
+            //}
+            //else //редактируем сущ-ий
+            //{
+            //    var mIfromDb = _repoService.ProductItemRepository.GetWithCondition(m => m.Id == ProductItemVM.ProductItem.Id);
+            //    #region Change Image
+            //    if (files.Count > 0) //значит мы выбрали картинку, т.е хотим поменять картинку (ну если она вообще была)
             //    {
-            //        var itemFromDb = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == ProductItemVM.ProductItem.Id);
+            //        string fileNameNew = Guid.NewGuid().ToString();
+            //        var uploads = Path.Combine(webRootPath, @"img\productItems");
+            //        var extension = Path.GetExtension(files[0].FileName);
 
-            //        #region Change Image
-            //        if (file != null) //значит мы выбрали картинку, т.е хотим поменять картинку (ну если она вообще была)
+            //        if (mIfromDb.Image != null)
             //        {
-            //            var fileName = Guid.NewGuid().ToString();
-            //            var uploads = Path.Combine(wwwRootPath, @"img\productItems");
-            //            var extension = Path.GetExtension(file.FileName);
-
-            //            var oldImgFile = Path.Combine(wwwRootPath, itemFromDb.Image.TrimStart('\\')); //удаляя лишний "\" в адресе
+            //            var oldImgFile = Path.Combine(webRootPath, mIfromDb.Image.TrimStart('\\'));
             //            if (System.IO.File.Exists(oldImgFile)) //если несущ-ет, значит пропускаем и сразу картинку ставим
             //            {
             //                System.IO.File.Delete(oldImgFile);
             //            }
-
-            //            using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-            //            {
-            //                file.CopyTo(fileStream);
-            //            }
-            //            ProductItemVM.ProductItem.Image = @"\img\menuItems\" + fileName + extension;
             //        }
-            //        #endregion
-            //        else  //значит оставляем старую картинку (это можно не писать, но мы подстрах-сь)
+
+            //        using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
             //        {
-            //            ProductItemVM.ProductItem.Image = itemFromDb.Image;
+            //            files[0].CopyTo(fileStream);
             //        }
-            //        //itemFromDb = ProductItemVM.ProductItem;
-
-            //        _repoService.ProductItemRepository.Update(ProductItemVM.ProductItem);
-            //        TempData["success"] = "Product updated successfully";
+            //        ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
             //    }
-
-
-            //    //if (ProductItemVM.ProductItem.Id == 0)
-            //    //{
-
-            //    //    //_repoService.ProductItemRepository.Add(ProductItemVM);
-            //    //    TempData["success"] = "New Type successfully added";
-            //    //}
-            //    //else
-            //    //{
-            //    //    //_repoService.ProductItemRepository.Update(ProductItemVM);
-            //    //    TempData["success"] = "Type successfully updated";
-            //    //}
-            //    //return RedirectToPage("./Index");
+            //    #endregion
+            //    else  //значит оставляем старую картинку (это можно не писать, но мы подстрах-сь)
+            //    {
+            //        ProductItemVM.ProductItem.Image = mIfromDb.Image;
+            //    }
+            //    _repoService.ProductItemRepository.Update(ProductItemVM.ProductItem);
             //}
-
-            //return new PageResult(); //stay
+            //files = null;
+            //return RedirectToPage("./Index");
         }
     }
 }
