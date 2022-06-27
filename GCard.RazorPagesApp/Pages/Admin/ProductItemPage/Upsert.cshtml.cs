@@ -39,15 +39,18 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
             var files = HttpContext.Request.Form.Files; 
             if (ProductItemVM.ProductItem.Id == 0) //т.е создаем новый
             {
-                var fileNameNew = Guid.NewGuid().ToString();
-                var uploads = Path.Combine(webRootPath, @"img\productItems");
-                var extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
+                if (files.Count > 0)
                 {
-                    files[0].CopyTo(fileStream);
-                } //полю дадим значения пути до файла
-                ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
+                    var fileNameNew = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"img\productItems");
+                    var extension = Path.GetExtension(files[0].FileName);
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    } //полю дадим значения пути до файла
+                    ProductItemVM.ProductItem.Image = @"img\productItems\" + fileNameNew + extension;
+                }
+
                 _repoService.ProductItemRepository.Add(ProductItemVM.ProductItem);
             }
             else //редактируем сущ-ий
@@ -60,10 +63,13 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
                     var uploads = Path.Combine(webRootPath, @"img\productItems");
                     var extension = Path.GetExtension(files[0].FileName);
 
-                    var oldImgFile = Path.Combine(webRootPath, mIfromDb.Image.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImgFile)) //если несущ-ет, значит пропускаем и сразу картинку ставим
+                    if (mIfromDb.Image != null)
                     {
-                        System.IO.File.Delete(oldImgFile);
+                        var oldImgFile = Path.Combine(webRootPath, mIfromDb.Image.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImgFile)) //если несущ-ет, значит пропускаем и сразу картинку ставим
+                        {
+                            System.IO.File.Delete(oldImgFile);
+                        }
                     }
 
                     using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
@@ -79,7 +85,7 @@ namespace GCard.RazorPagesApp.Pages.Admin.ProductItemPage
                 }
                 _repoService.ProductItemRepository.Update(ProductItemVM.ProductItem);
             }
-
+            files = null;
             return RedirectToPage("./Index");
 
 

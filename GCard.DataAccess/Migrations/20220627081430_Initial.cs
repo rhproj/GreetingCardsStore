@@ -188,12 +188,12 @@ namespace GCard.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    WholesalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    WholesalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     ItemTypeId = table.Column<int>(type: "int", nullable: false),
-                    OccasionId = table.Column<int>(type: "int", nullable: false)
+                    OccasionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,8 +208,7 @@ namespace GCard.DataAccess.Migrations
                         name: "FK_ProductItem_Occasion_OccasionId",
                         column: x => x.OccasionId,
                         principalTable: "Occasion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

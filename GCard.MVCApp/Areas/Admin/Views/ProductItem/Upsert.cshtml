@@ -2,6 +2,7 @@
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data"> 
     <input asp-for="ProductItem.Id" hidden />
+    <input asp-for="ProductItem.Image" hidden/>
 
     <div class="border p-3 mt-4 row">
         <div class="row pb-2">
@@ -45,7 +46,7 @@
 
                 <div class="mb-3">
                     <label asp-for="ProductItem.Image"></label>
-                    <input type="file" name="file" id="uploadBox" class="form-control" />  <!--id="uploadBox"  asp-for="ProductItem.Image"-->
+                    <input type="file" name="file" id="uploadBox" class="form-control" />  <!--asp-for="ProductItem.Image"-->
                 </div>
             </div>
             <div class="col-3">
@@ -68,23 +69,14 @@
 </form>
 
 @section Scripts{
-    <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
-            toolbar_mode: 'floating',
-        });
-        function ValidateInput() {
-            if (document.getElementById("uploadBox").value == "") {
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Загрузите картинку',
-            });
-                return false;
-            } return true;
-    </script>
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+@{
+<partial name="_ValidationScriptsPartial" />
+}
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+        toolbar_mode: 'floating',
+    });
+</script>
 }

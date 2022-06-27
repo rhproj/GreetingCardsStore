@@ -10,12 +10,12 @@ namespace GCard.Model
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [ValidateNever]
-        public string Image { get; set; }
-        public decimal Price { get; set; }
+        public string? Image { get; set; }
+        public decimal? Price { get; set; }
         [Display(Name = "Wholesale Price")]
-        public decimal WholesalePrice { get; set; }
+        public decimal? WholesalePrice { get; set; }
 
         [Display(Name = "Type")]
         public int ItemTypeId { get; set; }
@@ -24,9 +24,9 @@ namespace GCard.Model
         public ItemType ItemType { get; set; }
 
         [Display(Name = "Occasion/Holiday")]
-        public int OccasionId { get; set; }
+        public int? OccasionId { get; set; }
         [ForeignKey(nameof(OccasionId))]
         [ValidateNever]
-        public Occasion Occasion { get; set; }
+        public Occasion? Occasion { get; set; }
     }
 }

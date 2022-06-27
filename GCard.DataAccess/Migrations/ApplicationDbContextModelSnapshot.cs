@@ -68,11 +68,9 @@ namespace GCard.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ItemTypeId")
@@ -82,13 +80,13 @@ namespace GCard.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OccasionId")
+                    b.Property<int?>("OccasionId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("WholesalePrice")
+                    b.Property<decimal?>("WholesalePrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -312,9 +310,7 @@ namespace GCard.DataAccess.Migrations
 
                     b.HasOne("GCard.Model.Occasion", "Occasion")
                         .WithMany()
-                        .HasForeignKey("OccasionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OccasionId");
 
                     b.Navigation("ItemType");
 
