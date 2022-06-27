@@ -1,4 +1,6 @@
-﻿using GCard.Model;
+﻿using GCard.DataAccess.Repository;
+using GCard.Model;
+using GCard.Model.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,15 +10,21 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRepositoryService _repoService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRepositoryService repoService)
         {
             _logger = logger;
+            _repoService = repoService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<ProductItemVM> productItems = _repoService.ProductItemVMRepository.GetAll(includeProp: "ItemType,Occasion");
+            //IEnumerable<ItemType> itemTypes = _repoService.ItemTypeRepository.GetAll();
+            //IEnumerable<Occasion> occasions = _repoService.OccasionRepository.GetAll();
+
+            return View(productItems);
         }
 
         public IActionResult Privacy()

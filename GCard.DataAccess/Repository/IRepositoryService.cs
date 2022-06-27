@@ -1,4 +1,5 @@
 ﻿using GCard.Model;
+using GCard.Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace GCard.DataAccess.Repository
         IRepository<ItemType> ItemTypeRepository { get; }
         IRepository<Occasion> OccasionRepository { get; }
         IRepository<ProductItem> ProductItemRepository { get; }
+        IRepository<ProductItemVM> ProductItemVMRepository { get; }
         void Save();
     }
 }
