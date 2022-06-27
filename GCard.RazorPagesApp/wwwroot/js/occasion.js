@@ -10,7 +10,8 @@ function loadDataTable() {
             "url": "/api/DataTable/getAllOccasions"
         },
         "columns": [
-            { "data": "name", "width": "75%" },
+            { "data": "name", "width": "50%" },
+            { "data": "displayOrder", "width": "25%" },
             {
                 "data": "id",
                 "render": function (data) {

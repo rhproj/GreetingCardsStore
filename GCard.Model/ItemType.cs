@@ -16,6 +16,7 @@ namespace GCard.Model
         public string Name { get; set; }
 
         [Display(Name = "Display Order")]
-        public int DisplayOrder { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "positive integers only")]
+        public int? DisplayOrder { get; set; }
     }
 }

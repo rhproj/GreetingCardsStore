@@ -13,8 +13,12 @@ namespace GCard.Model
         public string? Description { get; set; }
         [ValidateNever]
         public string? Image { get; set; }
+
+        [Range(0, Double.PositiveInfinity)]
         public decimal? Price { get; set; }
+
         [Display(Name = "Wholesale Price")]
+        [Range(0, Double.PositiveInfinity)]
         public decimal? WholesalePrice { get; set; }
 
         [Display(Name = "Type")]

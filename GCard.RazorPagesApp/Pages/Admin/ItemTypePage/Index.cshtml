@@ -22,19 +22,6 @@
                 <th></th>
             </tr>
         </thead>
-@*        <tbody>
-            @foreach (var p in Model)
-            {
-                <tr>
-                    <td> @p.Name</td>
-                    <td> @p.DisplayOrder</td>
-                    <td>
-                            <a asp-controller="CoverType" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> </a>
-                            <a asp-controller="CoverType" asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger mx-2"><i class="bi bi-x-circle"></i> </a>
-                    </td>
-                </tr>
-            }
-        </tbody>*@
     </table>
 </div>
 
