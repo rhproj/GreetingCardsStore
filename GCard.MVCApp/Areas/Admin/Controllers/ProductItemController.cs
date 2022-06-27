@@ -51,13 +51,13 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
             var webRootPath = _hostEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
-            if (files.Count>0) //only if we pick an img
+            if (files.Count>0)
             {
                 var fileNameNew = Guid.NewGuid().ToString();
                 var uploads = Path.Combine(webRootPath, @"img\productItems");
-                var extension = Path.GetExtension(files[0].FileName); //renaming keeping same .ext
+                var extension = Path.GetExtension(files[0].FileName);
 
-                if (productItemVM.ProductItem.Image != null) //delet if already exists
+                if (productItemVM.ProductItem.Image != null)
                 {
                     var oldImgFile = Path.Combine(webRootPath, productItemVM.ProductItem.Image.TrimStart('\\'));
                     if (System.IO.File.Exists(oldImgFile))
@@ -75,64 +75,15 @@ namespace GCard.MVCApp.Areas.Admin.Controllers
 
             if (productItemVM.ProductItem.Id == 0)
             {
-                #region old
-                //var fileNameNew = Guid.NewGuid().ToString();
-                //var uploads = Path.Combine(webRootPath, @"img\productItems");
-                //var extension = Path.GetExtension(files[0].FileName); //renaming keeping same .ext
-
-                //using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
-                //{
-                //    files[0].CopyTo(fileStream);
-                //} //полю дадим значения пути до файла
-                //productItemVM.ProductItem.Image = @"\img\productItems\" + fileNameNew + extension; 
-                #endregion
                 _repoService.ProductItemRepository.Add(productItemVM.ProductItem);
                 TempData["success"] = "New Product added successfully";
             }
-            else //редактируем сущ-ий
+            else 
             {
-                #region old
-                //var mIfromDb = _repoService.ProductItemRepository.GetWithCondition(m => m.Id == productItemVM.ProductItem.Id);
-                //#region Change Image
-                //if (files.Count > 0) //значит мы выбрали картинку, т.е хотим поменять картинку (ну если она вообще была)
-                //{
-                //    string fileNameNew = Guid.NewGuid().ToString();
-                //    var uploads = Path.Combine(webRootPath, @"img\productItems");
-                //    var extension = Path.GetExtension(files[0].FileName);
-
-                //    var oldImgFile = Path.Combine(webRootPath, mIfromDb.Image.TrimStart('\\'));
-                //    if (System.IO.File.Exists(oldImgFile)) //если несущ-ет, значит пропускаем и сразу картинку ставим
-                //    {
-                //        System.IO.File.Delete(oldImgFile);
-                //    }
-
-                //    using (var fileStream = new FileStream(Path.Combine(uploads, fileNameNew + extension), FileMode.Create))
-                //    {
-                //        files[0].CopyTo(fileStream);
-                //    }
-                //    productItemVM.ProductItem.Image = @"\img\productItems\" + fileNameNew + extension;
-                //}
-                //#endregion
-                //else  //значит оставляем старую картинку (это можно не писать, но мы подстрах-сь)
-                //{
-                //    productItemVM.ProductItem.Image = mIfromDb.Image;
-                //} 
-                #endregion
                 _repoService.ProductItemRepository.Update(productItemVM.ProductItem);
                 TempData["success"] = "New Product updated successfully";
             }
 
-
-            //    if (productItem.Id == 0)
-            //    {
-            //        _repoService.ItemTypeRepository.Add(productItem);
-            //        TempData["success"] = "New Type successfully added";
-            //    }
-            //    else
-            //    {
-            //        _repoService.ItemTypeRepository.Update(productItem);
-            //        TempData["success"] = "Type successfully updated";
-            //    }
             return RedirectToAction("Index");
         }
 

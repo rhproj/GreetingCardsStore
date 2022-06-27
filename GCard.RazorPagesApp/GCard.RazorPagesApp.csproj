@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Customer\Cart\" />
     <Folder Include="wwwroot\img\productItems\" />
   </ItemGroup>
 
