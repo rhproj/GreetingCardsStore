@@ -9,7 +9,7 @@ namespace GCard.RazorPagesApp.Pages.Customer.Home
     {
         private readonly IRepositoryService _repoService;
         public IEnumerable<ProductItem> ProductItems { get; set; }
-        public IEnumerable<ItemType> ItemTypes { get; set; }
+        //public IEnumerable<ItemType> ItemTypes { get; set; }
         public IEnumerable<Occasion> Occasions { get; set; }
         public IndexModel(IRepositoryService repoService)
         {
@@ -19,7 +19,7 @@ namespace GCard.RazorPagesApp.Pages.Customer.Home
         public void OnGet()
         {
             ProductItems = _repoService.ProductItemRepository.GetAll(includeProp: "ItemType,Occasion");
-            ItemTypes = _repoService.ItemTypeRepository.GetAll();
+            //ItemTypes = _repoService.ItemTypeRepository.GetAll();
             Occasions = _repoService.OccasionRepository.GetAll();
         }
     }
