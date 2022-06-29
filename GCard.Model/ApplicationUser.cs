@@ -13,7 +13,7 @@ namespace GCard.Model
     public class ApplicationUser : IdentityUser //that way Appl-nUser has all the props of default IdentityUser used in Authentification
     {
         public string? Name { get; set; }
-        public string? Address { get; set; }
         public string? PostalCode { get; set; }
+        public string? Address { get; set; }
     }
 }

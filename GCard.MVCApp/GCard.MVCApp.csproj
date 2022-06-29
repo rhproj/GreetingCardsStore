@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GCard.DataAccess\GCard.DataAccess.csproj" />
     <ProjectReference Include="..\GCard.Model\GCard.Model.csproj" />
+    <ProjectReference Include="..\GCard.Utility\GCard.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
