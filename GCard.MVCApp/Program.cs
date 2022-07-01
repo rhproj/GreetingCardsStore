@@ -23,11 +23,11 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProvide
     .AddEntityFrameworkStores<ApplicationDbContext>();
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<IRepositoryService, RepositoryService>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

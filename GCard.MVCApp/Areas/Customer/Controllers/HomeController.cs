@@ -21,18 +21,20 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+            IEnumerable<ProductItem> productList = new List<ProductItem>(); //_repoService.ProductRepo.GetAll(includeProps: "Category,CoverType");
+            return View(productList);
             //IEnumerable<ProductItem> productItems = _repoService.ProductItemRepository.GetAll(includeProp: "ItemType,Occasion");
             //IEnumerable<ItemType> itemTypes = _repoService.ItemTypeRepository.GetAll();
             //IEnumerable<Occasion> occasions = _repoService.OccasionRepository.GetAll();
 
-            dynamic model = new ExpandoObject();
-            model.Occasions = _repoService.OccasionRepository.GetAll();
-            model.ProductItems = _repoService.ProductItemRepository.GetAll(includeProp: "ItemType,Occasion");
+            //dynamic model = new ExpandoObject();
+            //model.Occasions = _repoService.OccasionRepository.GetAll();
+            //model.ProductItems = _repoService.ProductItemRepository.GetAll(includeProp: "ItemType,Occasion");
 
             //ProductItemVM productItemVM = new ProductItemVM();
             //productItemVM.OccasionList = occasions; //_repoService.OccasionRepository.GetAll();
 
-            return View(model);    //productItems);
+            //return View(model);    //productItems);
         }
 
         public IActionResult Details(int id)

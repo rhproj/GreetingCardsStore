@@ -10,12 +10,16 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using GCard.Model;
+using GCard.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -29,13 +33,15 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +49,7 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -97,13 +104,39 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            //from ApplicatoinUser: 
+            public string? Name { get; set; }
+            public string? PostalCode { get; set; }
+            public string? Address { get; set; }
+            public string? PhoneNumber { get; set; }
+            public string? Role { get; set; }
+
+            //[ValidateNever]
+            //public IEnumerable<SelectListItem> RolesList { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            var rolesAdded = await _roleManager.RoleExistsAsync(SD.Role_Admin);
+            if (!rolesAdded)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
+                await _roleManager.CreateAsync(new IdentityRole(SD.Role_Manager));
+                await _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer));
+            }
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //populate Roles:
+            //Input = new InputModel()
+            //{
+            //    RolesList = _roleManager.Roles.Select(r => r.Name).Select(i => new SelectListItem
+            //    {
+            //        Text = i,
+            //        Value = i
+            //    })
+            //};
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -116,11 +149,40 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                //extension:
+                user.Name = Input.Name;
+                user.PostalCode = Input.PostalCode;
+                user.Address = Input.Address;
+                user.PhoneNumber = Input.PhoneNumber;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+                    string role = Request.Form["rbRole"].ToString();
+                    if (role == SD.Role_Admin)   //и присвоим эту роль для данного пользователя
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Role_Admin);
+                    }
+                    else if (role == SD.Role_Manager)
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Role_Manager);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.Role_Customer);
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
+
+                    //if (Input.Role == null)
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, SD.Role_Customer); //by default if not chosen
+                    //}
+                    //else
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, Input.Role);
+                    //}
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -154,11 +216,11 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
