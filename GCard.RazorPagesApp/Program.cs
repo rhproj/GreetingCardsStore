@@ -21,10 +21,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages();
 
+//builder.Services.AddControllersWithViews();
+
 builder.Services.AddScoped<IRepositoryService, RepositoryService>();
-builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 

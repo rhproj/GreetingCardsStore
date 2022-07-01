@@ -118,7 +118,7 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            var rolesAdded = await _roleManager.RoleExistsAsync(SD.Role_Admin);
+            var rolesAdded = await _roleManager.RoleExistsAsync(SD.Role_Admin); //if not exists yet - create:
             if (!rolesAdded)
             {
                 await _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin));
@@ -159,6 +159,8 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    _logger.LogInformation("User created a new account with password.");
+                    
                     string role = Request.Form["rbRole"].ToString();
                     if (role == SD.Role_Admin)   //и присвоим эту роль для данного пользователя
                     {
@@ -173,7 +175,6 @@ namespace GCard.RazorPagesApp.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.Role_Customer);
                     }
 
-                    _logger.LogInformation("User created a new account with password.");
 
                     //if (Input.Role == null)
                     //{
