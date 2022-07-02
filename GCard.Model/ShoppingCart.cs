@@ -20,10 +20,9 @@ namespace GCard.Model
         [Range(1, int.MaxValue, ErrorMessage = "Positive numbers only")]
         public int Count { get; set; }
 
-        //public string ApplicationUserId { get; set; } //in ASP Users - id is string so we using string
-        //[ForeignKey("ApplicationUserId")]
-        //[ValidateNever] //[NotMapped] //- используется в ситуациях когда мы не хотим, any navigation property got populated
-
-        //public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; } //in ASP Users - id is string so we using string
+        [ForeignKey("ApplicationUserId")]
+        [ValidateNever] //[NotMapped] //- используется в ситуациях когда мы не хотим, any navigation property got populated
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

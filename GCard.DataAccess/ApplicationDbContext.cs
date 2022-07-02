@@ -19,5 +19,6 @@ namespace GCard.DataAccess
         public DbSet<Occasion> Occasion { get; set; }
         public DbSet<ProductItem> ProductItem { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }
