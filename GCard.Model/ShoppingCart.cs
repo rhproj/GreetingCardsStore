@@ -14,7 +14,7 @@ namespace GCard.Model
         public int Id { get; set; }
         public int ProductItemId { get; set; }
         [ForeignKey("ProductItemId")]
-        [ValidateNever] //[NotMapped] //when u want ur navigation prop-is never to be mapped and populated, Validatenever - never validate
+        [ValidateNever] [NotMapped] //when u want ur navigation prop-is never to be mapped and populated, Validatenever - never validate
         public ProductItem ProductItem { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Positive numbers only")]
@@ -22,7 +22,7 @@ namespace GCard.Model
 
         public string ApplicationUserId { get; set; } //in ASP Users - id is string so we using string
         [ForeignKey("ApplicationUserId")]
-        [ValidateNever] //[NotMapped] //- используется в ситуациях когда мы не хотим, any navigation property got populated
+        [ValidateNever] [NotMapped] //- используется в ситуациях когда мы не хотим, any navigation property got populated
         public ApplicationUser ApplicationUser { get; set; }
     }
 }
