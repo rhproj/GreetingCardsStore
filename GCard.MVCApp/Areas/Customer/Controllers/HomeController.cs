@@ -1,9 +1,11 @@
 ﻿using GCard.DataAccess.Repository;
 using GCard.Model;
 using GCard.Model.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Security.Claims;
 
 namespace GCard.MVCApp.Areas.Customer.Controllers
 {
@@ -37,16 +39,36 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             return View(model);    //productItems);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int productId) //int id -got conflicted with 
         {
             //ProductItem productItem = _repoService.ProductItemRepository.GetWithCondition(i=>i.Id == id, includeProp: "ItemType,Occasion");
             ShoppingCart shoppingCart = new()
             {
                 Count = 1,
-                ProductItem = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == id, includeProp: "ItemType,Occasion"),
+                ProductItemId = productId,
+                ProductItem = _repoService.ProductItemRepository.GetWithCondition(i => i.Id == productId, includeProp: "ItemType,Occasion")
             };
 
             return View(shoppingCart);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            shoppingCart.ApplicationUserId = claim.Value;
+
+            //Не стал: еслиб был уже товар и добавить ещё.. тут нужно count и возможно? свой репо для ShCart
+            //ShoppingCart cartFromDb = _repoService.ShoppingCartRepo.GetWithCondition(c=>c.ApplicationUserId == claim.Value && c.ProductId == shCart.ProductId));
+            //if (cartFromDb == null) { } //no record of this item yet
+            //else { }
+
+            _repoService.ShoppingCartRepository.Add(shoppingCart);
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

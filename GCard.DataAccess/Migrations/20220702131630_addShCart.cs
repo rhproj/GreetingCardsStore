@@ -4,7 +4,7 @@
 
 namespace GCard.DataAccess.Migrations
 {
-    public partial class addShoppingCart : Migration
+    public partial class addShCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,6 @@ namespace GCard.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductItemId = table.Column<int>(type: "int", nullable: false),
-                    MenuItemId = table.Column<int>(type: "int", nullable: false),
                     Count = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -29,8 +28,8 @@ namespace GCard.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingCart_ProductItem_MenuItemId",
-                        column: x => x.MenuItemId,
+                        name: "FK_ShoppingCart_ProductItem_ProductItemId",
+                        column: x => x.ProductItemId,
                         principalTable: "ProductItem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -42,9 +41,9 @@ namespace GCard.DataAccess.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_MenuItemId",
+                name: "IX_ShoppingCart_ProductItemId",
                 table: "ShoppingCart",
-                column: "MenuItemId");
+                column: "ProductItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

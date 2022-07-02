@@ -13,7 +13,7 @@ namespace GCard.Model
     {
         public int Id { get; set; }
         public int ProductItemId { get; set; }
-        [ForeignKey("MenuItemId")]
+        [ForeignKey("ProductItemId")]
         [ValidateNever] //[NotMapped] //when u want ur navigation prop-is never to be mapped and populated, Validatenever - never validate
         public ProductItem ProductItem { get; set; }
 

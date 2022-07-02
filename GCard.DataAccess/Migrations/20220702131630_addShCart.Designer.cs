@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCard.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220702045625_addShoppingCart")]
-    partial class addShoppingCart
+    [Migration("20220702131630_addShCart")]
+    partial class addShCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,9 +118,6 @@ namespace GCard.DataAccess.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("MenuItemId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductItemId")
                         .HasColumnType("int");
 
@@ -128,7 +125,7 @@ namespace GCard.DataAccess.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("MenuItemId");
+                    b.HasIndex("ProductItemId");
 
                     b.ToTable("ShoppingCart");
                 });
@@ -380,7 +377,7 @@ namespace GCard.DataAccess.Migrations
 
                     b.HasOne("GCard.Model.ProductItem", "ProductItem")
                         .WithMany()
-                        .HasForeignKey("MenuItemId")
+                        .HasForeignKey("ProductItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
