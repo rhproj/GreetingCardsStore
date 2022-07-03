@@ -14,8 +14,10 @@ namespace GCard.DataAccess.Repository
         public IRepository<ItemType> ItemTypeRepository { get; }
         public IRepository<Occasion> OccasionRepository { get; }
         public IRepository<ProductItem> ProductItemRepository { get; }
+
         //public IRepository<ProductItemVM> ProductItemVMRepository { get; }
-        public IRepository<ShoppingCart> ShoppingCartRepository { get; }
+        //public IRepository<ShoppingCart> ShoppingCartRepository { get; }
+        public IShoppingCartRepo ShoppingCartRepository { get; }
 
         public RepositoryService(ApplicationDbContext dbContext)
         {
@@ -24,7 +26,7 @@ namespace GCard.DataAccess.Repository
             OccasionRepository = new Repository<Occasion>(_dbContext);
             ProductItemRepository = new Repository<ProductItem>(_dbContext);
             //ProductItemVMRepository = new Repository<ProductItemVM>(_dbContext);
-            ShoppingCartRepository = new Repository<ShoppingCart>(_dbContext);
+            ShoppingCartRepository = new ShoppingCartRepo(_dbContext); //Repository<ShoppingCart>(_dbContext);
         }
         public void Save()
         {

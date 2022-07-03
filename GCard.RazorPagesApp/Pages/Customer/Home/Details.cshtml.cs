@@ -26,8 +26,9 @@ namespace GCard.RazorPagesApp.Pages.Customer.Home
             ShoppingCart = new()
             {
                 ApplicationUserId = claim.Value, //now we have UserId populated inside shopping cart object
+                ProductItem = _repoService.ProductItemRepository.GetWithCondition(m => m.Id == id, includeProp: "ItemType,Occasion"),
                 ProductItemId = id,
-                ProductItem = _repoService.ProductItemRepository.GetWithCondition(m => m.Id == id, includeProp: "ItemType,Occasion")
+                Count = 1
             };
             //_repoService.ShoppingCartRepository.Add(shoppingCart);
             //return RedirectToAction(nameof(Index));
@@ -37,22 +38,16 @@ namespace GCard.RazorPagesApp.Pages.Customer.Home
         {
             if (ModelState.IsValid)
             {
-                _repoService.ShoppingCartRepository.Add(ShoppingCart);
+                ShoppingCart cartFromDb = _repoService.ShoppingCartRepository.GetWithCondition(filter: u => u.ApplicationUserId == ShoppingCart.ApplicationUserId && u.ProductItemId == ShoppingCart.ProductItemId); 
 
-
-                //ShoppingCart cartFromDb = _repoService.ShoppingCartRepository.GetWithCondition(filter:
-                //    u => u.ApplicationUserId == ShoppingCart.ApplicationUserId && u.ProductItemId == ShoppingCart.ProductItemId); //if + + means record exist, just increase counter
-
-                //if (cartFromDb == null) //еще не покупали такую вещь
-                //{
-                //    _repoService.ShoppingCartRepository.Add(ShoppingCart);
-                //    _repoService.Save();
-                //}
-                //else
-                //{
-                //    _repoService.ShoppingCartRepository.IncrementCount(cartFromDb, ShoppingCart.Count);
-                //    //почему не пишем _repoWrapper.Save() здесь? по-тому что мы делаем все inside IncrementCount ?? 
-                //}
+                if (cartFromDb == null) //еще не покупали такую вещь
+                {
+                    _repoService.ShoppingCartRepository.Add(ShoppingCart);
+                }
+                else
+                {
+                    _repoService.ShoppingCartRepository.IncrementCount(cartFromDb, ShoppingCart.Count);
+                }
 
                 return RedirectToPage("Index");
             }

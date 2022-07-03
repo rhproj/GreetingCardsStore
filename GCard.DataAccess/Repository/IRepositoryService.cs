@@ -14,7 +14,8 @@ namespace GCard.DataAccess.Repository
         IRepository<Occasion> OccasionRepository { get; }
         IRepository<ProductItem> ProductItemRepository { get; }
         //IRepository<ProductItemVM> ProductItemVMRepository { get; }
-        IRepository<ShoppingCart> ShoppingCartRepository { get; }
+        //IRepository<ShoppingCart> ShoppingCartRepository { get; }
+        IShoppingCartRepo ShoppingCartRepository { get; }
         void Save();
     }
 }

@@ -61,12 +61,19 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             shoppingCart.ApplicationUserId = claim.Value;
 
-            //Не стал: еслиб был уже товар и добавить ещё.. тут нужно count и возможно? свой репо для ShCart
-            //ShoppingCart cartFromDb = _repoService.ShoppingCartRepo.GetWithCondition(c=>c.ApplicationUserId == claim.Value && c.ProductId == shCart.ProductId));
-            //if (cartFromDb == null) { } //no record of this item yet
-            //else { }
+            //if exists
+            ShoppingCart cartFromDb = _repoService.ShoppingCartRepository.GetWithCondition(c => c.ApplicationUserId == claim.Value && c.ProductItemId == shoppingCart.ProductItemId);
+            if (cartFromDb == null) //no record of this item yet
+            {
+                _repoService.ShoppingCartRepository.Add(shoppingCart);
+            }
+            else
+            {
+                _repoService.ShoppingCartRepository.IncrementCount(cartFromDb, shoppingCart.Count);
+                //_repoService.ShoppingCartRepository.Update(shoppingCart);
+            }
 
-            _repoService.ShoppingCartRepository.Add(shoppingCart);
+            //_repoService.ShoppingCartRepository.Add(shoppingCart);
 
             return RedirectToAction(nameof(Index));
         }
