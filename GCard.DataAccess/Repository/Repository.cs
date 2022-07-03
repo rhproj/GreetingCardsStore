@@ -16,6 +16,7 @@ namespace GCard.DataAccess.Repository
         public Repository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            //_dbContext.ShoppingCart.Include(u => u.ProductItem).ThenInclude(u => u.ItemType);
             dbSet = _dbContext.Set<T>();
         }
 

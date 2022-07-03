@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.MVCApp", "GCard.MVCAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GCard.Utility", "GCard.Utility", "{6041AE8F-B6DF-477E-B3F6-0AED78B93F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCard.Utility", "GCard.Utility\GCard.Utility.csproj", "{B5AA0F10-F6D2-45CF-888F-C5E409391FEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GCard.Utility", "GCard.Utility\GCard.Utility.csproj", "{B5AA0F10-F6D2-45CF-888F-C5E409391FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
