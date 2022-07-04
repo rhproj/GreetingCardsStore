@@ -43,13 +43,13 @@ namespace GCard.RazorPagesApp.Pages.Customer.Cart
         public IActionResult OnPostMinus(int cartId)
         {
             var cart = _repoService.ShoppingCartRepository.GetWithCondition(c => c.Id == cartId);
-            if (cart.Count == 1)
+            if (cart.Count > 1)
             {
-                _repoService.ShoppingCartRepository.Delete(cart);
+                _repoService.ShoppingCartRepository.DecrementCount(cart, 1);
             }
             else
             {
-                _repoService.ShoppingCartRepository.DecrementCount(cart, 1);
+                _repoService.ShoppingCartRepository.Delete(cart);
             }
 
             return RedirectToPage("/Customer/Cart/Index");

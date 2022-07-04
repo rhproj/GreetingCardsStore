@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace GCard.Model
 {
-    public class ShoppingCart
+    public class OrderDetails
     {
         public int Id { get; set; }
-        public int ProductItemId { get; set; } //именно нужно, не просто ProductItem.Id
+        [Required]
+        public int OrderId { get; set; }
+        [ForeignKey("OrderId")]
+        [ValidateNever]
+        public OrderHeader OrderHeader { get; set; }
+
+        [Required]
+        public int ProductItemId { get; set; }
         [ForeignKey("ProductItemId")]
         [ValidateNever]
         public ProductItem ProductItem { get; set; }
-
-        [Range(1, 1000, ErrorMessage = "1-1000 only")]
         public int Count { get; set; }
-        public string ApplicationUserId { get; set; } //in ASP Users - id is string so we using string
-        [ForeignKey("ApplicationUserId")]
-        [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
+        public double Price { get; set; } //in case price update, when order is already placed
     }
 }
