@@ -12,17 +12,18 @@ namespace GCard.Model
     public class ShoppingCart
     {
         public int Id { get; set; }
-        public int ProductItemId { get; set; }
+        public int ProductItemId { get; set; } //именно нужно, не просто ProductItem.Id
         [ForeignKey("ProductItemId")]
-        [ValidateNever] [NotMapped] //when u want ur navigation prop-is never to be mapped and populated, Validatenever - never validate
+        //[NotMapped] //when u want ur navigation prop-is never to be mapped and populated, Validatenever - never validate
+        [ValidateNever]
         public ProductItem ProductItem { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Positive numbers only")]
+        [Range(1, 1000, ErrorMessage = "1-1000 only")]
         public int Count { get; set; }
-
         public string ApplicationUserId { get; set; } //in ASP Users - id is string so we using string
         [ForeignKey("ApplicationUserId")]
-        [ValidateNever] [NotMapped] //- используется в ситуациях когда мы не хотим, any navigation property got populated
+        //[NotMapped]
+        [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

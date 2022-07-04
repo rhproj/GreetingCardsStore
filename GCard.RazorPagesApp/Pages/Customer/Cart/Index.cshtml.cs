@@ -26,9 +26,9 @@ namespace GCard.RazorPagesApp.Pages.Customer.Cart
             if (claim != null)
             {
                 ShoppingCartList = _repoService.ShoppingCartRepository.GetAll(filter: u => u.ApplicationUserId == claim.Value,
-                    includeProp:"ProductItem"); //,ProductItem.ItemType,ProductItem.Occasion
+                    includeProp: "ProductItem,ProductItem.ItemType,ProductItem.Occasion");
 
-                //CartTotal = ShoppingCartList.Sum(m => m.ProductItem.Price * m.Count);
+                CartTotal = ShoppingCartList.Sum(m => m.ProductItem.Price * m.Count);
             }
         }
 
