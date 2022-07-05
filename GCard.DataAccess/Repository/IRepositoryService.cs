@@ -18,6 +18,7 @@ namespace GCard.DataAccess.Repository
         IShoppingCartRepo ShoppingCartRepository { get; }
         IOrderHeaderRepo OrderHeaderRepository { get; }
         IRepository<OrderDetails> OrderDetailRepository { get; }
+        IRepository<ApplicationUser> ApplicationUserRepository { get; }
         void Save();
     }
 }

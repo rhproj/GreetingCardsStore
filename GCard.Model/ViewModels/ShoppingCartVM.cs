@@ -11,6 +11,6 @@ namespace GCard.Model.ViewModels
     {
         public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
         public decimal? CartTotal { get; set; }
-        //public OrderHeader OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; }
     }
 }

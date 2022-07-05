@@ -24,6 +24,6 @@ namespace GCard.Model
         [ValidateNever]
         public ProductItem ProductItem { get; set; }
         public int Count { get; set; }
-        public double Price { get; set; } //in case price update, when order is already placed
+        public decimal? Price { get; set; } //in case price update, when order is already placed
     }
 }

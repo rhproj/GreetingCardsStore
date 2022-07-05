@@ -20,7 +20,7 @@ namespace GCard.Model
         [Required]
         public DateTime OrderDate { get; set; }
         public DateTime ShippingDate { get; set; }
-        public double OrderTotal { get; set; }
+        public decimal? OrderTotal { get; set; }
         public string? OrderStatus { get; set; }
         public string? PaymentStatus { get; set; }
         public string? TrackingNumber { get; set; }
@@ -29,11 +29,13 @@ namespace GCard.Model
         //public DateTime PaymentDueDate { get; set; }
 
         [Required]
+        public string Name { get; set; }
+        [Required]
         public string PhoneNumber { get; set; }
         [Required]
-        public string Address { get; set; }
+        public string PostalCode { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Address { get; set; }
         public string? Comments { get; set; }
         public string? SessionId { get; set; } //stripe
         public string? PaymentIntentId { get; set; } //stripe

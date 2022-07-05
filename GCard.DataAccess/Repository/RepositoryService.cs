@@ -17,6 +17,7 @@ namespace GCard.DataAccess.Repository
         public IShoppingCartRepo ShoppingCartRepository { get; }
         public IOrderHeaderRepo OrderHeaderRepository { get; }
         public IRepository<OrderDetails> OrderDetailRepository { get; }
+        public IRepository<ApplicationUser> ApplicationUserRepository { get; }
 
         public RepositoryService(ApplicationDbContext dbContext)
         {
@@ -27,6 +28,7 @@ namespace GCard.DataAccess.Repository
             ShoppingCartRepository = new ShoppingCartRepo(_dbContext); //Repository<ShoppingCart>(_dbContext);
             OrderHeaderRepository = new OrderHeaderRepo(_dbContext);
             OrderDetailRepository = new Repository<OrderDetails>(_dbContext);
+            ApplicationUserRepository = new Repository<ApplicationUser>(_dbContext);
         }
         public void Save()
         {
