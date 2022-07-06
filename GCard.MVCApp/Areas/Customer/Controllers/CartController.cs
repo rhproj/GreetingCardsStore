@@ -79,7 +79,7 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
                 OrderHeader = new()
             };
 
-            // to pop - te Name,Adress, Phone lets extract:
+            // to pop - the Name,Adress, Phone lets extract:
             ShoppingCartVM.OrderHeader.ApplicationUser = _repoService.ApplicationUserRepository.GetWithCondition(u => u.Id == claim.Value);
 
             ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
@@ -87,17 +87,13 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
             ShoppingCartVM.OrderHeader.Address = ShoppingCartVM.OrderHeader.ApplicationUser.Address;
 
-            //foreach (var cart in ShoppingCartVM.ShoppingCartList)
-            //{
-            //    ShoppingCartVM.OrderHeader.OrderTotal += cart.ProductItem.Price * cart.Count;
-            //}
             ShoppingCartVM.OrderHeader.OrderTotal = ShoppingCartVM.ShoppingCartList.Sum(c=>c.ProductItem.Price*c.Count);
 
             return View(ShoppingCartVM);
         }
 
         [HttpPost]
-        [ActionName("Summary")] //?
+        [ActionName("Summary")] 
         [ValidateAntiForgeryToken]
         public IActionResult SummaryPOST()  //SummaryPOST(ShoppingCartVM ShoppingCartVM), better add [BindProperty] above
         {
@@ -111,15 +107,16 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = claim.Value;
 
-            foreach (var cart in ShoppingCartVM.ShoppingCartList)
-            {
-                ShoppingCartVM.OrderHeader.OrderTotal += cart.ProductItem.Price * cart.Count;
-            }
+            ShoppingCartVM.OrderHeader.OrderTotal = ShoppingCartVM.ShoppingCartList.Sum(c => c.ProductItem.Price * c.Count);
+            //foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            //{
+            //    ShoppingCartVM.OrderHeader.OrderTotal += cart.ProductItem.Price * cart.Count;
+            //}
 
             _repoService.OrderHeaderRepository.Add(ShoppingCartVM.OrderHeader);
             //_repoService.Save();
 
-            foreach (var cart in ShoppingCartVM.ShoppingCartList) //for all the items in the shopping cart
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 OrderDetails orderDetail = new()
                 {
@@ -132,7 +129,7 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
                 //_repoService.Save();
             }
 
-            ///STRIPE
+            #region STRIPE
             var domain = "https://localhost:7228/";
             var options = new SessionCreateOptions
             {
@@ -142,7 +139,7 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
                 CancelUrl = domain + $"customer/cart/index",
             };
 
-            foreach (var item in ShoppingCartVM.ShoppingCartList)
+            foreach (var item in ShoppingCartVM.ShoppingCartList) //LineItems:
             {
                 var sessionLineItem = new SessionLineItemOptions
                 {
@@ -163,18 +160,12 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             var service = new SessionService();
             Session session = service.Create(options);
 
-            //ShoppingCartVM.OrderHeader.SessionId = session.Id;
-            //ShoppingCartVM.OrderHeader.PaymentIntentId = session.PaymentIntentId;
-            //_repoService.Save(); //Instead we moved it to OHRepo:
-
             _repoService.OrderHeaderRepository.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
             //_repoService.Save();
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
 
-            //_repoService.ShoppingCartRepo.DeleteRange(ShoppingCartVM.ListCart);
-            //_repoService.Save();
-            //return RedirectToAction("Index","Home");
+            #endregion
         }
 
         public IActionResult OrderConfirmation(int id)
@@ -186,12 +177,10 @@ namespace GCard.MVCApp.Areas.Customer.Controllers
             if (session.PaymentStatus.ToLower() == "paid")
             {
                 _repoService.OrderHeaderRepository.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
-                _repoService.Save();
             }
             List<ShoppingCart> shoppingCarts = _repoService.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
 
             _repoService.ShoppingCartRepository.DeleteRange(shoppingCarts);
-            //_repoService.Save();
 
             return View(id);
         }

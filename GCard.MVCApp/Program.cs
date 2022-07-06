@@ -18,8 +18,6 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddDefaultTokenProvide
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
